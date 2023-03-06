@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+  margin: 10px;
+}
+
+.button-box {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.btn {
+  min-width: 200px;
+  max-height: 50px;
+}
+
+footer {
+  position: fixed; 
+  left: 0; bottom: 0; 
+  padding: 10px; 
+  width: 100%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: grey;
+  height: 100px;
+}
+
