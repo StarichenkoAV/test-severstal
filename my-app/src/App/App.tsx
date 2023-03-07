@@ -17,8 +17,8 @@ function App(): JSX.Element {
       method: `${str.toUpperCase()}`,
     })
       .then((res) => res.json())
-      .then((res) => setUrlsArray([...urlsArray, res.url]))
-      .then(() => setDatesArray([...datesArray, new Date().toLocaleString()]));
+      .then((res) => setUrlsArray(prev => [...prev, res.url]))
+      .then(() => setDatesArray(prev => [...prev, new Date().toLocaleString()]));
   }
 
   const handleGetClick = (): void => {
