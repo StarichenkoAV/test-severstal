@@ -4,23 +4,33 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
 
+type Url = {
+  urlId: number;
+  url: string;
+}
+
+type Date = {
+  dateId: number;
+  date: string;
+}
+
 function App(): JSX.Element {
-  const [datesArray, setDatesArray] = useState<String[]>([]);
-  const [urlsArray, setUrlsArray] = useState<String[]>([]);
+  const [datesArray, setDatesArray] = useState<Date[]>([]);
+  const [urlsArray, setUrlsArray] = useState<Url[]>([]);
   const [show, setShow] = useState(false);
 
   const handleClose = (): void => setShow(false);
   const handleShow = (): void => setShow(true);
 
-  function getData(str: string): void {
-    fetch(`https://httpbin.org/${str}`, {
-      method: `${str.toUpperCase()}`,
+  function getData(req: string): void {
+    fetch(`https://httpbin.org/${req}`, {
+      method: `${req.toUpperCase()}`,
     })
       .then((res) => res.json())
-      .then((res) => setUrlsArray(prev => [...prev, res.url]))
-      .then(() => setDatesArray(prev => [...prev, new Date().toLocaleString()]));
+      .then((res) => setUrlsArray(prev => [...prev, {urlId : prev.length + 1, url: res.url}]))
+      .then(() => setDatesArray(prev => [...prev,{dateId: prev.length + 1, date: new Date().toLocaleString()}]));
   }
-
+ 
   const handleGetClick = (): void => {
     getData("get");
   };
@@ -78,13 +88,13 @@ function App(): JSX.Element {
                 <td>
                   <tr>Время запроса</tr>
                   {datesArray.map((date) => (
-                    <tr>{date}</tr>
+                    <tr key={date.dateId}>{date.date}</tr>
                   ))}
                 </td>
                 <td>
                   <tr>URL запроса</tr>
                   {urlsArray.map((url) => (
-                    <tr>{url}</tr>
+                    <tr key={url.urlId}>{url.url}</tr>
                   ))}
                 </td>
               </tbody>
